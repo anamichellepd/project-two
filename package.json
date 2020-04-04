@@ -1,0 +1,26 @@
+{
+  "name": "projecttwo",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.12.0"
+  },
+  "description": "",
+  "main": "server.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anamichellepd/project-two.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anamichellepd/project-two/issues"
+  },
+  "homepage": "https://github.com/anamichellepd/project-two#readme"
+}
