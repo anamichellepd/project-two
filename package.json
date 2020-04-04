@@ -17,8 +17,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint **/*.js --quiet",
+    "fix": "eslint --fix .",
+    "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
   "repository": {
     "type": "git",
