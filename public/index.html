@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!--CSS Style Sheet-->
+    <link rel="stylesheet" type="text/css" href="Assets/style.css" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <!--Main Body of App-->
+  <body
+    id="background"
+    class="col s12 m6"
+    style="background-image:url(Assets/Images/backgroundPineapple.jpeg)"
+  >
+    <div id="home" class="navbar-fixed">
+      <nav class="teal darken-1">
+        <div class="nav-wrapper">
+          <a href="" class="brand-logo">The Saavy Traveler</a>
+          <a href="" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+              <a href="#home">Home</a>
+            </li>
+            <li>
+              <a href="#reviews">Reviews</a>
+            </li>
+            <li>
+              <a href="#itinerary">Itinerary</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <ul class="sidenav show-on-medium" id="mobile-demo">
+      <li>
+        <a href="#home" class="white-text">Home</a>
+      </li>
+      <li>
+        <a href="#reviews" class="white-text">Reviews</a>
+      </li>
+      <li>
+        <a href="#itinerary" class="white-text">Itinerary</a>
+      </li>
+    </ul>
+    <!-- Section: Slider -->
+    <section class="slider">
+      <ul class="slides">
+        <li>
+          <img src="Assets/Images/coffeandcomputer.jpeg" alt="coffee" />
+          <div class="caption center-align">
+            <h2 class="black-text">A New Way to Plan Your Trip</h2>
+          </div>
+        </li>
+        <li>
+          <img src="Assets/Images/avocadotoast.jpeg" alt="avocadotoast" />
+          <div class="caption center-align">
+            <h2 class="black-text">Find The Best Reviews</h2>
+          </div>
+        </li>
+        <li>
+          <img src="Assets/Images/food-dessert-sweet-color.jpg" alt="desert" />
+          <div class="caption center-align">
+            <h2 class="white-text">Save Results on a Custom-Made Itinerary</h2>
+          </div>
+        </li>
+        <li>
+          <img src="Assets/Images/firefood1.jpg" alt="desert" />
+          <div class="caption center-align">
+            <h2 class="white-text">Make Changes to Your Itinerary</h2>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <div class="container">
+      <h3 class="dest">Destination City:</h3>
+      <div class="nav-wrapper">
+        <div class="input-field col s12 m6">
+          <input id="city-input" type="text" />
+          <!-- Modal -->
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>Needs a City</h4>
+              <p>A valid city is required.</p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-teal btn-flat"
+                >Got it</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        id="submitBtn"
+        class="btn-small blue-grey modal-trigger accent-2 waves-effect waves-light card_travel"
+        href="#modal1"
+        type="submit"
+        name="action"
+      >
+        Search<i class="material-icons right">restaurant</i>
+      </button>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m5">
+          <div id="reviews" class="rev">Top Reviews</div>
+          <p id="instructions">Click a restaurant to add to your itinerary.</p>
+          <div class="left-align" id="yelpArea"></div>
+        </div>
+        <div class="col s12 m7 center-align">
+          <h2 id="videoHeader">Destination Video</h2>
+          <iframe id="iframe" src="" width="480" height="350"></iframe>
+          <div id="youTubeArea"></div>
+          <!--itinerary table container-->
+          <div id="itineraryArea">
+            <div id="itinerary" class="card">
+              <h5 class="card-header center-align lime darken-2 accent-2">
+                Itinerary
+              </h5>
+              <div class="card-body lime lighten-5">
+                <table
+                  class="responsive-table highlight table-hover"
+                  id="itinerary-table"
+                >
+                  <thead class="thead-light">
+                    <tr>
+                      <th id="restaurant" scope="col">Restaurant</th>
+                      <th scope="col">Phone Number</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">City</th>
+                      <th scope="col">State</th>
+                      <th scope="col">Zip Code</th>
+                      <th scope="col">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--Javascript file link-->
+    <script src="Assets/app.js"></script>
+  </body>
+  <footer>
+    © 2020 Copyright
+  </footer>
+</html>
