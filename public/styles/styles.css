@@ -1,3 +1,170 @@
-.list-group-item {
-  line-height: 2.5;
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.brand-logo {
+  font-size: 15px;
+  text-align: left;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.switch {
+  margin-left: 20px;
+  align-self: flex-end;
+  background-color: white;
+}
+.switch:hover {
+  background-color: #a7ffeb;
+}
+.sidenav {
+  background-color: #00897b;
+  color: gray;
+}
+#main {
+  background-image: url("Images/backgroundPineapple2.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  width: auto;
+  height: auto;
+}
+.slider .btn {
+  margin-top: 20px;
+}
+#img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30em;
+  height: 20em;
+}
+.dest {
+  margin-top: 40px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 25px;
+  color: rgb(34, 33, 33);
+}
+#modal1 {
+  background-color: #00897b;
+  background-image: url("Images/city.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Open Sans", sans-serif;
+}
+hr {
+  width: 85%;
+  border: 1.5px solid rgb(243, 230, 114);
+}
+.progress {
+  width: 1000px;
+  margin: 0 auto;
+}
+#yelpArea {
+  display: center;
+}
+#reviews {
+  font-family: "Sriracha", cursive;
+  font-weight: 500;
+  font-size: 30px;
+  margin-top: 30px;
+  text-align: left;
+  color: rgb(31, 30, 30);
+}
+#instructions {
+  font-family: "Sriracha", cursive;
+  font-size: 18px;
+}
+.image {
+  cursor: pointer;
+}
+.image:active {
+  -webkit-filter: brightness(150%);
+  filter: brightness(150%);
+}
+.restaurant {
+  cursor: initial;
+}
+#videoHeader {
+  font-family: "Sriracha", cursive;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 30px;
+  text-align: center;
+  color: rgb(31, 30, 30);
+}
+#iframe {
+  margin-top: 40px;
+}
+#itineraryArea {
+  margin-top: 100px;
+}
+.card-header {
+  padding: 10px;
+  font-weight: bold;
+}
+.delete {
+  cursor: pointer;
+}
+.material-icons {
+  padding-bottom: 20px;
+}
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #00897b;
+  margin-top: 50px;
+  text-align: center;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  a.brand-logo {
+    font-size: 22px;
+  }
+  #iframe {
+    width: "420";
+    height: "340";
+  }
+}
+@media screen and (max-width: 380px) {
+  a.brand-logo {
+    font-size: 17px;
+  }
+  #iframe {
+    width: "350";
+    height: "260";
+  }
+}
+@media screen and (max-width: 315px) {
+  a.brand-logo {
+    font-size: 14px;
+  }
+  #iframe {
+    width: "290";
+    height: "235";
+  }
+}
+
+#main.dark-mode {
+  -webkit-filter: brightness(75%);
+  filter: brightness(75%);
+  background-image: url("Images/backgroundPineapple3.jpg");
+}
+.nav-wrapper.dark-mode,
+footer.dark-mode {
+  -webkit-filter: brightness(70%);
+  filter: brightness(70%);
+}
+.dest.dark-mode,
+#city-input.dark-mode,
+#reviews.dark-mode,
+#instructions.dark-mode,
+#yelpArea.dark-mode,
+#videoHeader.dark-mode,
+#youTubeArea.dark-mode,
+.modal.dark-mode {
+  color: white;
 }
