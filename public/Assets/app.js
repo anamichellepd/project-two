@@ -197,6 +197,28 @@ $(document).ready(function() {
       });
     }
   });
+
+  var API = {
+    saveRestaurant: function(restaurant) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "POST",
+        url: "api/restaurants",
+        data: JSON.stringify(restaurant),
+      });
+    },
+    getAllRestaurants: function() {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "GET",
+        url: "api/restaurants",
+      });
+    },
+  };
   //function to add to itinerary on table and localStorage
   function addToItinerary() {
     $("html, body").animate(
@@ -209,18 +231,21 @@ $(document).ready(function() {
     var city = $(this).attr("city-val");
     var state = $(this).attr("state-val");
     var zipCode = $(this).attr("zip-val");
-    var itinerary = {
-      name: name,
-      phone: phone,
-      address: address,
-      city: city,
-      state: state,
-      zipCode: zipCode,
+    var restaurant = {
+      restaurantName: name,
+      // phone: phone,
+      // address: address,
+      // city: city,
+      // state: state,
+      // zipCode: zipCode,
     };
-    itineraries.push(itinerary);
-    renderItineraries(itineraries);
-    localStorage.setItem("itineraries", JSON.stringify(itineraries));
+    itineraries.push(restaurant);
+    API.saveRestaurant(restaurant);
+    const restaurants = API.getAllRestaurants;
+    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
+    renderItineraries(restaurants);
   }
+
   //clicking on the restaurant div adds to the itinerary table and storage
   $(document).on("click", ".image", addToItinerary);
   //clicking on the delete button in a row of the table deletes
@@ -230,7 +255,10 @@ $(document).ready(function() {
     var toDoNumber = $(this).attr("data-itinerary");
     itineraries.splice(toDoNumber, 1);
     renderItineraries(itineraries);
-    localStorage.setItem("itineraries", JSON.stringify(itineraries));
+
+    //save to API variable to do something with it later
+
+    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
   });
 });
 
