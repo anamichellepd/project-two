@@ -63,6 +63,7 @@ $(document).ready(function() {
   //calls renderItineraries function
   renderItineraries(itineraries);
 
+  //when clicking SUBMIT button
   $("#submitBtn").on("click", function(event) {
     event.preventDefault();
 
@@ -198,6 +199,7 @@ $(document).ready(function() {
     }
   });
 
+  //defining the API to save each restaurant to it
   var API = {
     saveRestaurant: function(restaurant) {
       return $.ajax({
@@ -218,8 +220,17 @@ $(document).ready(function() {
         url: "api/restaurants",
       });
     },
+    deleteOneRestaurant: function(id) {
+      return $.ajax({
+        url: "api/restaurants/" + id,
+        type: "DELETE",
+      });
+    },
   };
-  //function to add to itinerary on table and localStorage
+
+  //function to refresh restaurants after changes are made
+
+  //function to add to itinerary on table and API database
   function addToItinerary() {
     $("html, body").animate(
       { scrollTop: $("#itinerary").offset().top - 100 },
@@ -242,21 +253,28 @@ $(document).ready(function() {
     itineraries.push(restaurant);
     API.saveRestaurant(restaurant);
     const restaurants = API.getAllRestaurants;
-    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
+    //If we wanted to save to local storage::: localStorage.setItem("itineraries", JSON.stringify(itineraries));
     renderItineraries(restaurants);
   }
 
-  //clicking on the restaurant div adds to the itinerary table and storage
+  //When clicking on RESTAURANT Iimage
   $(document).on("click", ".image", addToItinerary);
-  //clicking on the delete button in a row of the table deletes
-  //row on table and element in local storage
+  //When clicking on DELETE button
   $(document).on("click", ".material-icons", function() {
     event.preventDefault();
     var toDoNumber = $(this).attr("data-itinerary");
     itineraries.splice(toDoNumber, 1);
     renderItineraries(itineraries);
 
-    //save to API variable to do something with it later
+    var handleDeleteBtnClick = function() {
+      var idToDelete = $(this)
+        .parent()
+        .attr("data-id");
+
+      API.deleteOneRestaurant(idToDelete).then(function() {
+        refreshRestaurants();
+      });
+    };
 
     // localStorage.setItem("itineraries", JSON.stringify(itineraries));
   });
