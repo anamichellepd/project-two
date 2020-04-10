@@ -4,11 +4,11 @@ $(document).ready(function() {
   $(".header").hide();
   $("#instructions").hide();
 
+  //DARK MODE SETTINGS
   $(".switch").on("click", function(event) {
     event.preventDefault();
-
     $(this).text(
-      $(this).text() == "Dark mode: ON" ? "Dark mode: OFF" : "Dark mode: ON"
+      $(this).text() === "Dark mode: ON" ? "Dark mode: OFF" : "Dark mode: ON"
     );
 
     $("#main").toggleClass("dark-mode");
@@ -25,22 +25,53 @@ $(document).ready(function() {
     $(".modal").toggleClass("dark-mode");
   });
 
+  //defining the API to save each restaurant to it
+  var API = {
+    saveRestaurant: function(restaurant) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "POST",
+        url: "api/restaurants",
+        data: JSON.stringify(restaurant),
+      });
+    },
+    getAllRestaurants: function() {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "GET",
+        url: "api/restaurants",
+      });
+    },
+    deleteOneRestaurant: function(id) {
+      return $.ajax({
+        url: "api/restaurants/" + id,
+        type: "DELETE",
+      });
+    },
+  };
+
   //function that adds itinerary row to the table
   function renderItineraries(itineraries) {
+    console.log(itineraries);
+
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
       var newRow = $("<tr>").append(
-        $("<td>").text(itineraries[i].name),
-        $("<td>").text(itineraries[i].phone),
-        $("<td>").text(itineraries[i].address),
-        $("<td>").text(itineraries[i].city),
-        $("<td>").text(itineraries[i].state),
-        $("<td>").text(itineraries[i].zipCode)
+        $("<td>").text(itineraries[i].restaurantName),
+        $("<td>").text(itineraries[i].restaurantPhone),
+        $("<td>").text(itineraries[i].restaurantAddress),
+        $("<td>").text(itineraries[i].restaurantCity),
+        $("<td>").text(itineraries[i].restaurantState),
+        $("<td>").text(itineraries[i].restaurantZipCode)
       );
       var deleteIcon = $("<i>")
         .addClass("material-icons")
         .addClass("delete")
-        .attr("data-itinerary", i)
+        .attr("data-itinerary", itineraries[i].id)
         .attr("title", "Delete this row")
         .text("delete");
       newRow = newRow.append("<br/>").append(deleteIcon);
@@ -48,20 +79,26 @@ $(document).ready(function() {
     }
   }
   //creates a variable that stores and parses information from localStorage
-  var itineraries = JSON.parse(localStorage.getItem("itineraries"));
+  // var itineraries = JSON.parse(localStorage.getItem("itineraries"));
+  var itineraries = [];
+  API.getAllRestaurants().then(function(restaurants) {
+    itineraries = restaurants;
+    //calls renderItineraries function
+    renderItineraries(itineraries);
+    console.log(itineraries);
+  });
+
   //if statement that says if there is nothing in the variable itineraries,
   //then the the itineraries array will be empty
-  if (!itineraries) {
-    itineraries = [];
-  }
+  // if (!itineraries) {
+  //   itineraries = [];
+  // }
 
   $("#city-input").keydown(function(e) {
     if (e.which === 13) {
       $("#submitBtn").click();
     }
   });
-  //calls renderItineraries function
-  renderItineraries(itineraries);
 
   //when clicking SUBMIT button
   $("#submitBtn").on("click", function(event) {
@@ -88,6 +125,7 @@ $(document).ready(function() {
         "slow"
       );
 
+      //GETTING YELP
       $.ajax({
         url:
           "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search",
@@ -170,6 +208,7 @@ $(document).ready(function() {
         $(".progress").hide();
       });
 
+      //GETTING YOUTUBE
       $.ajax({
         type: "GET",
         url: "https://www.googleapis.com/youtube/v3/search",
@@ -199,35 +238,6 @@ $(document).ready(function() {
     }
   });
 
-  //defining the API to save each restaurant to it
-  var API = {
-    saveRestaurant: function(restaurant) {
-      return $.ajax({
-        headers: {
-          "Content-Type": "application/json",
-        },
-        type: "POST",
-        url: "api/restaurants",
-        data: JSON.stringify(restaurant),
-      });
-    },
-    getAllRestaurants: function() {
-      return $.ajax({
-        headers: {
-          "Content-Type": "application/json",
-        },
-        type: "GET",
-        url: "api/restaurants",
-      });
-    },
-    deleteOneRestaurant: function(id) {
-      return $.ajax({
-        url: "api/restaurants/" + id,
-        type: "DELETE",
-      });
-    },
-  };
-
   //function to refresh restaurants after changes are made
 
   //function to add to itinerary on table and API database
@@ -244,37 +254,37 @@ $(document).ready(function() {
     var zipCode = $(this).attr("zip-val");
     var restaurant = {
       restaurantName: name,
-      // phone: phone,
-      // address: address,
-      // city: city,
-      // state: state,
-      // zipCode: zipCode,
+      restaurantPhone: phone,
+      restaurantAddress: address,
+      restaurantCity: city,
+      restaurantState: state,
+      restaurantZipCode: zipCode,
     };
+
     itineraries.push(restaurant);
-    API.saveRestaurant(restaurant);
-    const restaurants = API.getAllRestaurants;
-    //If we wanted to save to local storage::: localStorage.setItem("itineraries", JSON.stringify(itineraries));
-    renderItineraries(restaurants);
+    API.saveRestaurant(restaurant).then(function() {
+      API.getAllRestaurants().then(function(restaurants) {
+        renderItineraries(restaurants);
+      });
+    });
   }
 
   //When clicking on RESTAURANT Iimage
   $(document).on("click", ".image", addToItinerary);
   //When clicking on DELETE button
-  $(document).on("click", ".material-icons", function() {
+  $(document).on("click", ".delete", function() {
     event.preventDefault();
-    var toDoNumber = $(this).attr("data-itinerary");
-    itineraries.splice(toDoNumber, 1);
-    renderItineraries(itineraries);
+    var restaurantIDNumber = $(this).attr("data-itinerary");
+    // itineraries.splice(toDoNumber, 1);
+    // renderItineraries(itineraries);
 
-    var handleDeleteBtnClick = function() {
-      var idToDelete = $(this)
-        .parent()
-        .attr("data-id");
-
-      API.deleteOneRestaurant(idToDelete).then(function() {
-        refreshRestaurants();
+    API.deleteOneRestaurant(restaurantIDNumber).then(function() {
+      API.getAllRestaurants().then(function(restaurants) {
+        renderItineraries(restaurants);
       });
-    };
+    });
+
+    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
 
     // localStorage.setItem("itineraries", JSON.stringify(itineraries));
   });
