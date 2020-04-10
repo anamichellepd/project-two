@@ -22,7 +22,7 @@ body {
   color: gray;
 }
 #main {
-  background-image: url("Images/backgroundPineapple2.jpg");
+  background-image: url("../Assets/Images/backgroundPineapple2.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
@@ -151,7 +151,7 @@ footer {
 #main.dark-mode {
   -webkit-filter: brightness(75%);
   filter: brightness(75%);
-  background-image: url("Images/backgroundPineapple3.jpg");
+  background-image: url("../Assets/Images/backgroundPineapple3.jpg");
 }
 .nav-wrapper.dark-mode,
 footer.dark-mode {

@@ -1,17 +1,17 @@
 /* Schema for SQL database/table. We haven't discussed this type of file yet */
-DROP DATABASE IF EXISTS boston;
+DROP DATABASE IF EXISTS savvydb;
 
 /* Create database */
-CREATE DATABASE boston;
-USE boston;
+CREATE DATABASE savvydb;
+USE savvydb;
 
 /* Create new table with a primary key that auto-increments, and a text field */
-CREATE TABLE colleges
+CREATE TABLE restaurants
 (
-    id INT NOT NULL
-    AUTO_INCREMENT,
+  id INT NOT NULL
+  AUTO_INCREMENT,
   name VARCHAR
-    (100) NOT NULL,
+  (100) NOT NULL,
   PRIMARY KEY
-    (id)
+  (id)
 );

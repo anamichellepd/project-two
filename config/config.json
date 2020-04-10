@@ -2,14 +2,14 @@
   "development": {
     "username": "root",
     "password": "myrootpassword",
-    "database": "boston",
+    "database": "savvydb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "testdb",
+    "password": "myrootpassword",
+    "database": "savvydb",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false

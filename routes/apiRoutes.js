@@ -18,11 +18,11 @@ module.exports = function(app) {
   });
 
   // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(
-      dbExample
+  app.delete("/api/restaurants/:id", function(req, res) {
+    db.Restaurant.destroy({ where: { id: req.params.id } }).then(function(
+      dbRestaurant
     ) {
-      res.json(dbExample);
+      res.json(dbRestaurant);
     });
   });
 };
