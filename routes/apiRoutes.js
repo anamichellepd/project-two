@@ -18,7 +18,8 @@ const checkJWT = (req, res, next) => {
 
 module.exports = function(app) {
   // Get all restauarants
-  app.get("/api/restaurants", checkJWT, function(req, res) {
+  //app.get("/api/restaurants", checkJWT, function(req, res) {
+  app.get("/api/restaurants", function(req, res) {
     db.Restaurant.findAll({}).then(function(dbRestaurants) {
       res.json(dbRestaurants);
 

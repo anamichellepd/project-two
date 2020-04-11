@@ -46,6 +46,19 @@ $(document).ready(function() {
         url: "api/restaurants",
       });
     },
+    getOneRestaurant: function() {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "GET",
+        url:
+          "yelp.com/biz." +
+          restaurant.restaurantName +
+          restaurant.restaurantCity +
+          "?osq=Restaurants",
+      });
+    },
     deleteOneRestaurant: function(id) {
       return $.ajax({
         url: "api/restaurants/" + id,
@@ -61,10 +74,17 @@ $(document).ready(function() {
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
       var newRow = $("<tr>").append(
-        $("<td>").text(itineraries[i].restaurantName),
+        $("<td>")
+          .addClass("restaurant-name-url")
+          .attr("data-itinerary", itineraries[i].restaurantName)
+          .text(itineraries[i].restaurantName)
+          .attr("title", "Click to see more on Yelp"),
+
         $("<td>").text(itineraries[i].restaurantPhone),
         $("<td>").text(itineraries[i].restaurantAddress),
-        $("<td>").text(itineraries[i].restaurantCity),
+        $("<td>")
+          .attr("data-itinerary", itineraries[i].restaurantCity)
+          .text(itineraries[i].restaurantCity),
         $("<td>").text(itineraries[i].restaurantState),
         $("<td>").text(itineraries[i].restaurantZipCode)
       );
@@ -271,6 +291,31 @@ $(document).ready(function() {
 
   //When clicking on RESTAURANT Iimage
   $(document).on("click", ".image", addToItinerary);
+
+  //When clicking on restaurant NAME from Itinerary table
+  $(document).on("click", ".restaurant-name-url", function() {
+    var restaurantName = $(this).attr("data-itinerary");
+    var restaurantCity;
+    console.log(restaurantCity);
+
+    //SEPARATING RESTAURANT NAME WITH DASH
+    var splitRestaurantName = restaurantName.split(" ");
+    var joinedRestaurantName = splitRestaurantName.join("-");
+
+    //SEPARATING CITY NAME WITH DASH
+    // var splitCityName = restaurantCity.split(" ");
+    // var joinedCityName = splitCityName.join("-");
+    // console.log(joinedCityName);
+
+    function checkoutRestaurantTab() {
+      // window.open(
+      //   "https://www.yelp.com/biz/" + joinedRestaurantName + joinedCityName+"?osq=Restaurants",
+      //   "_blank"
+      // );
+    }
+    checkoutRestaurantTab();
+  });
+
   //When clicking on DELETE button
   $(document).on("click", ".delete", function() {
     event.preventDefault();
