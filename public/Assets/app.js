@@ -27,14 +27,14 @@ $(document).ready(function() {
 
   //defining the API to save each restaurant to it
   var API = {
-    saveRestaurant: function(restaurant) {
+    saveRestaurant: function(Restaurant) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json",
         },
         type: "POST",
         url: "api/restaurants",
-        data: JSON.stringify(restaurant),
+        data: JSON.stringify(Restaurant),
       });
     },
     getAllRestaurants: function() {
@@ -46,17 +46,13 @@ $(document).ready(function() {
         url: "api/restaurants",
       });
     },
-    getOneRestaurant: function() {
+    getOneRestaurant: function(id) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json",
         },
         type: "GET",
-        url:
-          "yelp.com/biz." +
-          restaurant.restaurantName +
-          restaurant.restaurantCity +
-          "?osq=Restaurants",
+        url: "api/restaurants/" + id,
       });
     },
     deleteOneRestaurant: function(id) {
@@ -73,12 +69,14 @@ $(document).ready(function() {
 
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
+      var urlLink = $("<a>" + itineraries[i].restaurantName + "</a>")
+        .attr("href", itineraries[i].restaurantURL)
+        .attr("target", "_blank");
       var newRow = $("<tr>").append(
         $("<td>")
           .addClass("restaurant-name-url")
           .attr("data-itinerary", itineraries[i].restaurantName)
-          .text(itineraries[i].restaurantName)
-          .attr("title", "Click to see more on Yelp"),
+          .append(urlLink),
 
         $("<td>").text(itineraries[i].restaurantPhone),
         $("<td>").text(itineraries[i].restaurantAddress),
@@ -180,6 +178,7 @@ $(document).ready(function() {
               .attr("city-val", item.location.city)
               .attr("state-val", item.location.state)
               .attr("zip-val", item.location.zip_code)
+              .attr("url-val", item.url)
               .addClass("image")
               .attr("style", "width:200px; height:150px; margin-top:50px");
             var name = $("<p>")
@@ -213,6 +212,7 @@ $(document).ready(function() {
                   item.review_county +
                   " reviews."
               );
+
             // restaurantDiv.append(image);
             restaurantDiv.append(name);
             restaurantDiv.append(address);
@@ -272,6 +272,7 @@ $(document).ready(function() {
     var city = $(this).attr("city-val");
     var state = $(this).attr("state-val");
     var zipCode = $(this).attr("zip-val");
+    var URL = $(this).attr("url-val");
     var restaurant = {
       restaurantName: name,
       restaurantPhone: phone,
@@ -279,6 +280,7 @@ $(document).ready(function() {
       restaurantCity: city,
       restaurantState: state,
       restaurantZipCode: zipCode,
+      restaurantURL: URL,
     };
 
     itineraries.push(restaurant);
@@ -291,30 +293,6 @@ $(document).ready(function() {
 
   //When clicking on RESTAURANT Iimage
   $(document).on("click", ".image", addToItinerary);
-
-  //When clicking on restaurant NAME from Itinerary table
-  $(document).on("click", ".restaurant-name-url", function() {
-    var restaurantName = $(this).attr("data-itinerary");
-    var restaurantCity;
-    console.log(restaurantCity);
-
-    //SEPARATING RESTAURANT NAME WITH DASH
-    var splitRestaurantName = restaurantName.split(" ");
-    var joinedRestaurantName = splitRestaurantName.join("-");
-
-    //SEPARATING CITY NAME WITH DASH
-    // var splitCityName = restaurantCity.split(" ");
-    // var joinedCityName = splitCityName.join("-");
-    // console.log(joinedCityName);
-
-    function checkoutRestaurantTab() {
-      // window.open(
-      //   "https://www.yelp.com/biz/" + joinedRestaurantName + joinedCityName+"?osq=Restaurants",
-      //   "_blank"
-      // );
-    }
-    checkoutRestaurantTab();
-  });
 
   //When clicking on DELETE button
   $(document).on("click", ".delete", function() {
