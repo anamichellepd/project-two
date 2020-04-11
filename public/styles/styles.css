@@ -47,7 +47,7 @@ body {
 }
 #modal1 {
   background-color: #00897b;
-  background-image: url("Images/city.jpg");
+  background-image: url("../Assets/Images/city.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   font-family: "Open Sans", sans-serif;
