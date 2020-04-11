@@ -27,14 +27,14 @@ $(document).ready(function() {
 
   //defining the API to save each restaurant to it
   var API = {
-    saveRestaurant: function(restaurant) {
+    saveRestaurant: function(Restaurant) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json",
         },
         type: "POST",
         url: "api/restaurants",
-        data: JSON.stringify(restaurant),
+        data: JSON.stringify(Restaurant),
       });
     },
     getAllRestaurants: function() {
@@ -73,6 +73,9 @@ $(document).ready(function() {
 
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
+      var urlLink = $("<a>" + itineraries[i].restaurantName + "</a>")
+        .attr("href", itineraries[i].restaurantURL)
+        .attr("target", "_blank");
       var newRow = $("<tr>").append(
         $("<td>")
           .addClass("restaurant-name-url")
@@ -180,6 +183,7 @@ $(document).ready(function() {
               .attr("city-val", item.location.city)
               .attr("state-val", item.location.state)
               .attr("zip-val", item.location.zip_code)
+              .attr("url-val", item.url)
               .addClass("image")
               .attr("style", "width:200px; height:150px; margin-top:50px");
             var name = $("<p>")
@@ -213,6 +217,7 @@ $(document).ready(function() {
                   item.review_county +
                   " reviews."
               );
+
             // restaurantDiv.append(image);
             restaurantDiv.append(name);
             restaurantDiv.append(address);
@@ -272,6 +277,7 @@ $(document).ready(function() {
     var city = $(this).attr("city-val");
     var state = $(this).attr("state-val");
     var zipCode = $(this).attr("zip-val");
+    var URL = $(this).attr("url-val");
     var restaurant = {
       restaurantName: name,
       restaurantPhone: phone,
@@ -279,6 +285,7 @@ $(document).ready(function() {
       restaurantCity: city,
       restaurantState: state,
       restaurantZipCode: zipCode,
+      restaurantURL: URL,
     };
 
     itineraries.push(restaurant);

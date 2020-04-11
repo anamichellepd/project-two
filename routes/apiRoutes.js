@@ -1,4 +1,4 @@
-var db = require("../models");
+var db = require("../models/");
 var bcrypt = require("bcrypt");
 var jwt = require("jwt-simple");
 
@@ -7,14 +7,14 @@ const checkJWT = (req, res, next) => {
     var decoded = jwt.decode(req.token, process.env.JWT_SECRET);
   } catch (error) {
     console.log("ERROR", error);
-    
+
     next();
   }
 
   req.user = decoded;
 
   next();
-}
+};
 
 module.exports = function(app) {
   // Get all restauarants
@@ -23,7 +23,7 @@ module.exports = function(app) {
     db.Restaurant.findAll({}).then(function(dbRestaurants) {
       res.json(dbRestaurants);
 
-    console.log(req.user);
+      console.log(req.user);
 
       res.send("Here are your restaurants");
     });
@@ -60,9 +60,9 @@ module.exports = function(app) {
   app.post("/api/signin", function(req, res) {
     const { email, password } = req.body;
 
-if (!email || !password) {
-  return res.status(406).send("Missing email or password");
-};
+    if (!email || !password) {
+      return res.status(406).send("Missing email or password");
+    }
 
     db.User.findOne({
       where: {
@@ -85,7 +85,7 @@ if (!email || !password) {
         }
 
         console.log(process.env.JWT_SECRET);
-        
+
         return res.send({
           token: jwt.encode({ userId: user.id }, process.env.JWT_SECRET),
         });
