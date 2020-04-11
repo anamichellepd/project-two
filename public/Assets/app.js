@@ -25,6 +25,18 @@ $(document).ready(function() {
     $(".modal").toggleClass("dark-mode");
   });
 
+  //SIGN UP
+  $(".sign-up").on("click", function(event) {
+    $("#modal3").modal();
+    $("#modal3").modal("open");
+  });
+
+  //LOG IN
+  $(".log-in").on("click", function(event) {
+    $("#modal2").modal();
+    $("#modal2").modal("open");
+  });
+
   //defining the API to save each restaurant to it
   var API = {
     saveRestaurant: function(Restaurant) {
@@ -61,12 +73,29 @@ $(document).ready(function() {
         type: "DELETE",
       });
     },
+    signUp: function(User) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        type: "POST",
+        url: "api/user",
+        data: JSON.stringify(User),
+      });
+    },
   };
+
+  $(".sign-up-btn").on("click", function(event) {
+    event.preventDefault();
+    API.signUp().then(function() {
+      API.getAllRestaurants().then(function(restaurants) {
+        renderItineraries(restaurants);
+      });
+    });
+  }
 
   //function that adds itinerary row to the table
   function renderItineraries(itineraries) {
-    console.log(itineraries);
-
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
       var urlLink = $("<a>" + itineraries[i].restaurantName + "</a>")
@@ -131,8 +160,8 @@ $(document).ready(function() {
       .trim();
 
     if (cityName === "") {
-      $(".modal").modal();
-      $(".modal").modal("open");
+      $("#modal1").modal();
+      $("#modal1").modal("open");
     } else {
       $("iframe").show();
       $(".header").show();
@@ -143,7 +172,7 @@ $(document).ready(function() {
         "slow"
       );
 
-      //GETTING YELP
+      //GETTING YELP FOR RESTAURANT
       $.ajax({
         url:
           "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search",
@@ -163,12 +192,7 @@ $(document).ready(function() {
         if (totalresults > 0) {
           $.each(response.businesses, function(i, item) {
             var restaurantDiv = $("<div>").addClass("restaurant");
-            // .attr("name-val", item.name)
-            // .attr("phone-val", item.display_phone)
-            // .attr("address-val", item.location.address1)
-            // .attr("city-val", item.location.city)
-            // .attr("state-val", item.location.state)
-            // .attr("zip-val", item.location.zip_code);
+
             var image = $("<img>");
             image
               .attr("src", item.image_url)
@@ -228,13 +252,102 @@ $(document).ready(function() {
         $(".progress").hide();
       });
 
+      //GETTING YELP FOR THINGS TO DO
+      // $.ajax({
+      //   url:
+      //     "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/events",
+      //   method: "GET",
+      //   error: function(error) {
+      //     console.log("error", error);
+      //   },
+      //   headers: {
+      //     Authorization:
+      //       "Bearer yeA3JWrnqqHEeJRXtYN-Zz6ssPmmnCC3MnsJqlA_zgMCw5QMJa1085iTZp2dT2kMKuBPL_aUWzJNClwJSjSAnESmO30S4ERTJp3s2qr7sxNCOyKkTbjo9mCLQAw_XnYx",
+      //   },
+      //   dataType: "json",
+      //   data: { term: "things to do", location: cityName, limit: "5" },
+      // }).then(function(response) {
+      //   console.log(response);
+      //   var totalresults = response.total;
+      //   if (totalresults > 0) {
+      //     $.each(response.businesses, function(i, item) {
+      //       var thingsToDoDiv = $("<div>").addClass("things-to-do");
+
+      //       var image = $("<img>");
+      //       image
+      //         .attr("src", item.image_url)
+      //         .attr("name-val", item.name)
+      //         .attr("phone-val", item.display_phone)
+      //         .attr("address-val", item.location.address1)
+      //         .attr("city-val", item.location.city)
+      //         .attr("state-val", item.location.state)
+      //         .attr("zip-val", item.location.zip_code)
+      //         .attr("url-val", item.url)
+      //         .addClass("image")
+      //         .attr("style", "width:200px; height:150px; margin-top:50px");
+      //       var name = $("<p>")
+      //         .addClass("name")
+      //         .html("We found " + item.name.bold());
+      //       var address = $("<p>")
+      //         .addClass("address")
+      //         .attr("style", "margin-top:-15px")
+      //         .html(
+      //           item.location.address1 +
+      //             " " +
+      //             item.location.city +
+      //             " " +
+      //             item.location.state +
+      //             " " +
+      //             item.location.zip_code
+      //         );
+      //       var phone = $("<p>")
+      //         .addClass("phone")
+      //         .attr("style", "margin-top:-15px")
+      //         .html(
+      //           "The phone number for this business is: " + item.display_phone
+      //         );
+      //       var ratingWithReviewCount = $("<p>")
+      //         .addClass("ratingWithReviewCount")
+      //         .attr("style", "margin-top:-15px")
+      //         .html(
+      //           "This business has a rating of " +
+      //             item.rating +
+      //             " with " +
+      //             item.review_county +
+      //             " reviews."
+      //         );
+
+      //       // thingsToDoDiv.append(image);
+      //       thingsToDoDiv.append(address);
+      //       thingsToDoDiv.append(phone);
+      //       thingsToDoDiv.append(ratingWithReviewCount);
+      //       thingsToDoDiv.addClass("waves-effect").addClass("waves-light");
+      //       $("#yelpArea").append(image);
+      //       $("#yelpArea").append(thingsToDoDiv);
+      //     });
+      //   } else {
+      //     $("#yelpArea").append("<h5>We discovered no results!</h5>");
+      //   }
+      //   $(".progress").hide();
+      // });
+      //       thingsToDoDiv.append(ratingWithReviewCount);
+      //       thingsToDoDiv.addClass("waves-effect").addClass("waves-light");
+      //       $("#yelpArea").append(image);
+      //       $("#yelpArea").append(thingsToDoDiv);
+      //     });
+      //   } else {
+      //     $("#yelpArea").append("<h5>We discovered no results!</h5>");
+      //   }
+      //   $(".progress").hide();
+      // });
+
       //GETTING YOUTUBE
       $.ajax({
         type: "GET",
         url: "https://www.googleapis.com/youtube/v3/search",
         data: {
           key: "AIzaSyBeqNJkinkCUFPlPWWbW6PUVPEo5jz6Bxc",
-          q: cityName + "restaurant" + "food",
+          q: cityName,
           part: "snippet",
           maxResults: 1,
           type: "video",
@@ -317,7 +430,7 @@ $(document).ready(function() {
 const sideNav = document.querySelector(".sidenav");
 M.Sidenav.init(sideNav, {});
 
-// Slider
+// IMAGE Slider
 const slider = document.querySelector(".slider");
 M.Slider.init(slider, {
   indicators: false,
