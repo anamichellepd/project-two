@@ -48,6 +48,16 @@
                 <span id="onOffSwitchText" class="innerSwitch">OFF</span>
               </a>
             </li>
+            <li>
+              <a class="waves-effect waves-teal teal-text btn-small sign-up"
+                >Sign Up
+              </a>
+            </li>
+            <li>
+              <a class="waves-effect waves-teal teal-text btn-small log-in"
+                >Log In
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -64,14 +74,89 @@
         <a href="#itinerary" class="white-text">Itinerary</a>
       </li>
       <li>
-        <a
-          class="waves-effect waves-teal teal-text btn-small switch"
-          style="background-color: white"
+        <a class="waves-effect waves-teal teal-text btn-small switch"
           >Dark mode:
           <span id="onOffSwitchText" class="innerSwitch">OFF</span>
         </a>
       </li>
+
+      <li>
+        <a class="waves-effect waves-teal teal-text btn-small sign-up"
+          >Sign Up
+        </a>
+      </li>
+      <li>
+        <a class="waves-effect waves-teal teal-text btn-small log-in"
+          >Log In
+        </a>
+      </li>
     </ul>
+
+    <!-- Modal for Sign Up -->
+    <div id="modal3" class="container modal">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" />
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" />
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="firstName" type="text" class="validate" />
+              <label for="firstName">First Name</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a
+          href="#!"
+          class="modal-close waves-effect waves-teal btn-flat sign-up-btn"
+          >Sign Up</a
+        >
+      </div>
+    </div>
+
+    <!-- Modal for Log-in -->
+    <div id="modal2" class="modal">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="input-email" type="email" class="validate" />
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="input-password" type="password" class="validate" />
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="input-firstName" type="text" class="validate" />
+              <label for="first_name">First Name</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a
+          href="#!"
+          class="modal-close waves-effect waves-teal btn-flat log-in-btn"
+          >Log In</a
+        >
+      </div>
+    </div>
 
     <!--Main Body of App-->
     <div id="main" class="col s12 m6">
@@ -111,9 +196,9 @@
       </section>
 
       <div class="container">
-        <h3 class="dest">Destination City:</h3>
         <div class="nav-wrapper">
           <div class="input-field col s12 m6">
+            <h3 class="dest">Destination City:</h3>
             <input id="city-input" type="text" />
 
             <!-- Modal -->
@@ -170,6 +255,7 @@
               itinerary.
             </p>
             <div class="left-align" id="yelpArea"></div>
+            <div class="left-align" id="eventsArea"></div>
           </div>
 
           <div class="col s12 m6 center-align">

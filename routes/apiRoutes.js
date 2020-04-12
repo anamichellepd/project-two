@@ -22,10 +22,6 @@ module.exports = function(app) {
   app.get("/api/restaurants", function(req, res) {
     db.Restaurant.findAll({}).then(function(dbRestaurants) {
       res.json(dbRestaurants);
-
-      console.log(req.user);
-
-      res.send("Here are your restaurants");
     });
   });
 
@@ -48,6 +44,8 @@ module.exports = function(app) {
   });
 
   app.post("/api/user", function(req, res) {
+    console.log(req.body);
+
     db.User.create(req.body)
       .then(function() {
         return res.send(true);
@@ -57,7 +55,7 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/signin", function(req, res) {
+  app.post("/api/login", function(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -72,23 +70,22 @@ module.exports = function(app) {
       if (!user) {
         return res.status(406).send("User not found.");
       }
+    });
 
-      bcrypt.compare(password, user.password, function(err, result) {
-        if (err) {
-          console.log(err);
+    bcrypt.compare(password, user.password, function(err, result) {
+      if (err) {
+        console.log(err);
 
-          return res.status(500).send("Service unavailable");
-        }
+        return res.status(500).send("Service unavailable");
+      }
 
-        if (!result) {
-          return res.status(401).send("Unauthorized");
-        }
+      if (!result) {
+        return res.status(401).send("Unauthorized");
+      }
 
-        console.log(process.env.JWT_SECRET);
-
-        return res.send({
-          token: jwt.encode({ userId: user.id }, process.env.JWT_SECRET),
-        });
+      console.log(process.env.JWT_SECRET);
+      return res.send({
+        token: jwt.encode({ userId: user.id }, process.env.JWT_SECRET),
       });
     });
   });

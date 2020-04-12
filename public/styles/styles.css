@@ -17,6 +17,20 @@ body {
 .switch:hover {
   background-color: #a7ffeb;
 }
+.log-in {
+  font-weight: bold;
+  background-color: #a7ffeb;
+}
+.log-in:hover {
+  background-color: white;
+}
+.sign-up {
+  font-weight: bold;
+  background-color: #a7ffeb;
+}
+.sign-up:hover {
+  background-color: white;
+}
 .sidenav {
   background-color: #00897b;
   color: gray;
@@ -52,12 +66,20 @@ body {
   background-size: cover;
   font-family: "Open Sans", sans-serif;
 }
+#modal2 {
+  font-family: "Open Sans", sans-serif;
+}
+#modal3 {
+  font-family: "Open Sans", sans-serif;
+}
 hr {
   width: 85%;
   border: 1.5px solid rgb(243, 230, 114);
 }
 .progress {
   width: 1000px;
+  height: 30px;
+  border-radius: 15px;
   margin: 0 auto;
 }
 #yelpArea {

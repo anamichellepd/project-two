@@ -1,8 +1,15 @@
 $(document).ready(function() {
+  function runModal() {
+    $("#modal3").modal();
+    $("#modal3").modal("open");
+  }
+
   $(".progress").hide();
   $("iframe").hide();
   $(".header").hide();
   $("#instructions").hide();
+
+  runModal();
 
   //DARK MODE SETTINGS
   $(".switch").on("click", function(event) {
@@ -23,6 +30,12 @@ $(document).ready(function() {
     $("#videoHeader").toggleClass("dark-mode");
     $("#youTubeArea").toggleClass("dark-mode");
     $(".modal").toggleClass("dark-mode");
+  });
+
+  //LOG IN
+  $(".log-in").on("click", function(event) {
+    $("#modal2").modal();
+    $("#modal2").modal("open");
   });
 
   //defining the API to save each restaurant to it
@@ -65,16 +78,38 @@ $(document).ready(function() {
         type: "DELETE",
       });
     },
+    signUp: function(User) {
+      return $.ajax({
+        type: "POST",
+        url: "/api/user",
+        data: {
+          email: $("#email")
+            .val()
+            .trim(),
+          password: $("#password")
+            .val()
+            .trim(),
+          firstName: $("#firstName")
+            .val()
+            .trim(),
+        },
+      });
+    },
   };
+
+  $(".sign-up-btn").on("click", function(event) {
+    event.preventDefault();
+    API.signUp();
+  });
+  // });
 
   //function that adds itinerary row to the table
   function renderItineraries(itineraries) {
-    console.log(itineraries);
-
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
       var urlLink = $("<a>" + itineraries[i].restaurantName + "</a>")
         .attr("href", itineraries[i].restaurantURL)
+        .attr("title", "See this restaurant in Yelp")
         .attr("target", "_blank");
       var newRow = $("<tr>").append(
         $("<td>")
@@ -111,12 +146,6 @@ $(document).ready(function() {
     console.log(itineraries);
   });
 
-  //if statement that says if there is nothing in the variable itineraries,
-  //then the the itineraries array will be empty
-  // if (!itineraries) {
-  //   itineraries = [];
-  // }
-
   $("#city-input").keydown(function(e) {
     if (e.which === 13) {
       $("#submitBtn").click();
@@ -136,8 +165,8 @@ $(document).ready(function() {
       .trim();
 
     if (cityName === "") {
-      $(".modal").modal();
-      $(".modal").modal("open");
+      $("#modal1").modal();
+      $("#modal1").modal("open");
     } else {
       $("iframe").show();
       $(".header").show();
@@ -148,7 +177,7 @@ $(document).ready(function() {
         "slow"
       );
 
-      //GETTING YELP
+      //GETTING YELP FOR RESTAURANT
       $.ajax({
         url:
           "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search",
@@ -168,12 +197,7 @@ $(document).ready(function() {
         if (totalresults > 0) {
           $.each(response.businesses, function(i, item) {
             var restaurantDiv = $("<div>").addClass("restaurant");
-            // .attr("name-val", item.name)
-            // .attr("phone-val", item.display_phone)
-            // .attr("address-val", item.location.address1)
-            // .attr("city-val", item.location.city)
-            // .attr("state-val", item.location.state)
-            // .attr("zip-val", item.location.zip_code);
+
             var image = $("<img>");
             image
               .attr("src", item.image_url)
@@ -238,7 +262,7 @@ $(document).ready(function() {
         type: "GET",
         url: "https://www.googleapis.com/youtube/v3/search",
         data: {
-          key: "AIzaSyBeqNJkinkCUFPlPWWbW6PUVPEo5jz6Bxc",
+          key: "AIzaSyAoFqKem3-oN5_rJRl9hmjVfPng_NQxn0M",
           q: cityName + "restaurant" + "food",
           part: "snippet",
           maxResults: 1,
@@ -327,30 +351,24 @@ $(document).ready(function() {
   $(document).on("click", ".delete", function() {
     event.preventDefault();
     var restaurantIDNumber = $(this).attr("data-itinerary");
-    // itineraries.splice(toDoNumber, 1);
-    // renderItineraries(itineraries);
 
     API.deleteOneRestaurant(restaurantIDNumber).then(function() {
       API.getAllRestaurants().then(function(restaurants) {
         renderItineraries(restaurants);
       });
     });
-
-    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
-
-    // localStorage.setItem("itineraries", JSON.stringify(itineraries));
   });
-});
 
-// Side Menu
-const sideNav = document.querySelector(".sidenav");
-M.Sidenav.init(sideNav, {});
+  // Side Menu
+  const sideNav = document.querySelector(".sidenav");
+  M.Sidenav.init(sideNav, {});
 
-// Slider
-const slider = document.querySelector(".slider");
-M.Slider.init(slider, {
-  indicators: false,
-  height: 550,
-  transition: 500,
-  interval: 6000,
+  // IMAGE Slider
+  const slider = document.querySelector(".slider");
+  M.Slider.init(slider, {
+    indicators: false,
+    height: 550,
+    transition: 500,
+    interval: 6000,
+  });
 });
