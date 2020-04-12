@@ -43,6 +43,8 @@ module.exports = function(app) {
   });
 
   app.post("/api/user", function(req, res) {
+    console.log(req.body);
+
     db.User.create(req.body)
       .then(function() {
         return res.send(true);
@@ -52,7 +54,7 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/signin", function(req, res) {
+  app.post("/api/login", function(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
