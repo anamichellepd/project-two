@@ -55,7 +55,13 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/login", function(req, res) {
+  app.get("/api/user", function(req, res) {
+    db.User.findOne({ where: { email }}).then(function(id) {
+      return res.json(id);
+    });
+  });
+
+  app.get("/api/user", function(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -64,8 +70,8 @@ module.exports = function(app) {
 
     db.User.findOne({
       where: {
-        email,
-      },
+        email
+      }
     }).then(function(user) {
       if (!user) {
         return res.status(406).send("User not found.");
@@ -85,7 +91,7 @@ module.exports = function(app) {
 
       console.log(process.env.JWT_SECRET);
       return res.send({
-        token: jwt.encode({ userId: user.id }, process.env.JWT_SECRET),
+        token: jwt.encode({ userId: user.id }, process.env.JWT_SECRET)
       });
     });
   });
