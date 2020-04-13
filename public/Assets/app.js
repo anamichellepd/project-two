@@ -1,6 +1,8 @@
 $(document).ready(function() {
   function runModal() {
-    $("#modal3").modal();
+    $("#modal3").modal({
+      dismissible: false
+    });
     $("#modal3").modal("open");
   }
 
@@ -32,52 +34,50 @@ $(document).ready(function() {
     $(".modal").toggleClass("dark-mode");
   });
 
-  //LOG IN
-  $(".log-in").on("click", function(event) {
-    $("#modal2").modal();
-    $("#modal2").modal("open");
-  });
-
   //defining the API to save each restaurant to it
   var API = {
     saveRestaurant: function(Restaurant) {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         type: "POST",
         url: "api/restaurants",
-        data: JSON.stringify(Restaurant),
+        data: JSON.stringify(Restaurant)
       });
     },
     getAllRestaurants: function() {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         type: "GET",
-        url: "api/restaurants",
+        url: "api/restaurants"
       });
     },
-    getOneRestaurant: function(id) {
+    getOneRestaurant: function() {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         type: "GET",
-        url: "api/restaurants/" + id,
+        url:
+          "yelp.com/biz." +
+          restaurant.restaurantName +
+          restaurant.restaurantCity +
+          "?osq=Restaurants"
       });
     },
     deleteOneRestaurant: function(id) {
       return $.ajax({
         url: "api/restaurants/" + id,
-        type: "DELETE",
+        type: "DELETE"
       });
     },
-    signUp: function(User) {
+    signUp: function() {
       return $.ajax({
         type: "POST",
-        url: "/api/user",
+        url: "/api/users",
         data: {
           email: $("#email")
             .val()
@@ -87,32 +87,73 @@ $(document).ready(function() {
             .trim(),
           firstName: $("#firstName")
             .val()
-            .trim(),
-        },
+            .trim()
+        }
       });
     },
+    logIn: function() {
+      return $.ajax({
+        type: "GET",
+        url: "/api/users",
+        // data: {
+        //   email: $("#email")
+        //     .val()
+        //     .trim(),
+        //   password: $("#password")
+        //     .val()
+        //     .trim(),
+        // },
+        // success: function(firstName) {
+        //   alert("Hi " + firstName);
+        // },
+        error: function() {
+          alert("You have entered incorrect login information");
+          $("#modal3").modal({
+            dismissible: false
+          });
+          $("#modal3").modal("open");
+        }
+      });
+    }
   };
 
   $(".sign-up-btn").on("click", function(event) {
     event.preventDefault();
     API.signUp();
   });
+
+  $(".registered-btn").on("click", function() {
+    $("#modal2").modal({
+      dismissible: false
+    });
+    $("#modal2").modal("open");
+  });
+
+  $(".log-in-btn").on("click", function() {
+    API.logIn().then(function(result) {
+      alert("Hi " + result.firstName);
+    });
+  });
+
+  // $(".log-out").on("click", function() {
+
+  //   });
   // });
 
-  //function that adds itinerary row to the table
+  //Function that adds restaurant to the table
   function renderItineraries(itineraries) {
     $("#itinerary-table tbody").empty();
     for (var i = 0; i < itineraries.length; i++) {
       var urlLink = $("<a>" + itineraries[i].restaurantName + "</a>")
         .attr("href", itineraries[i].restaurantURL)
-        .attr("title", "See this restaurant in Yelp")
+        .attr("title", "Click this to see restaurant in Yelp")
         .attr("target", "_blank");
+
       var newRow = $("<tr>").append(
         $("<td>")
           .addClass("restaurant-name-url")
           .attr("data-itinerary", itineraries[i].restaurantName)
           .append(urlLink),
-
         $("<td>").text(itineraries[i].restaurantPhone),
         $("<td>").text(itineraries[i].restaurantAddress),
         $("<td>")
@@ -182,10 +223,10 @@ $(document).ready(function() {
         },
         headers: {
           Authorization:
-            "Bearer 777OVHyUQXu4MD9WPwXQ3dub9jGslCwGt185TfYEQF6JoBa7tr7kjVe7OvbcNzwp2mY8k3JkODi2curLYOzJsG5dKxmQD8SzDYABjKEzUGC8i3Bk4vXHaU6P5G5DXnYx",
+            "Bearer 777OVHyUQXu4MD9WPwXQ3dub9jGslCwGt185TfYEQF6JoBa7tr7kjVe7OvbcNzwp2mY8k3JkODi2curLYOzJsG5dKxmQD8SzDYABjKEzUGC8i3Bk4vXHaU6P5G5DXnYx"
         },
         dataType: "json",
-        data: { term: "restaurant", location: cityName, limit: "5" },
+        data: { term: "restaurant", location: cityName, limit: "5" }
       }).then(function(response) {
         console.log(response);
         var totalresults = response.total;
@@ -262,13 +303,13 @@ $(document).ready(function() {
           part: "snippet",
           maxResults: 1,
           type: "video",
-          videoEmbeddable: true,
+          videoEmbeddable: true
         },
         error: function(response) {
           $("#youTubeArea").append(
             "<h5>Request Failed.</br> We apologize for the inconvenience.</h5>"
           );
-        },
+        }
       }).then(function(response) {
         console.log(response);
         $("iframe").attr(
@@ -305,6 +346,7 @@ $(document).ready(function() {
       restaurantState: state,
       restaurantZipCode: zipCode,
       restaurantURL: URL,
+      userID: userID
     };
 
     itineraries.push(restaurant);
@@ -317,6 +359,30 @@ $(document).ready(function() {
 
   //When clicking on RESTAURANT Iimage
   $(document).on("click", ".image", addToItinerary);
+
+  // //When clicking on restaurant NAME from Itinerary table
+  // $(document).on("click", ".restaurant-name-url", function() {
+  //   var restaurantName = $(this).attr("data-itinerary");
+  //   var restaurantCity;
+  //   console.log(restaurantCity);
+
+  //   //SEPARATING RESTAURANT NAME WITH DASH
+  //   // var splitRestaurantName = restaurantName.split(" ");
+  //   // var joinedRestaurantName = splitRestaurantName.join("-");
+
+  //   //SEPARATING CITY NAME WITH DASH
+  //   // var splitCityName = restaurantCity.split(" ");
+  //   // var joinedCityName = splitCityName.join("-");
+  //   // console.log(joinedCityName);
+
+  //   // function checkoutRestaurantTab() {
+  //   //   // window.open(
+  //   //   //   "https://www.yelp.com/biz/" + joinedRestaurantName + joinedCityName+"?osq=Restaurants",
+  //   //   //   "_blank"
+  //   //   // );
+  //   // }
+  //   // checkoutRestaurantTab();
+  // });
 
   //When clicking on DELETE button
   $(document).on("click", ".delete", function() {
@@ -340,6 +406,6 @@ $(document).ready(function() {
     indicators: false,
     height: 550,
     transition: 500,
-    interval: 6000,
+    interval: 6000
   });
 });

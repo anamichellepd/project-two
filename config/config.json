@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "myrootpassword",
-    "database": "savvydb",
+    "password": "rootroot123",
+    "database": "Restaurant",
     "host": "localhost",
     "dialect": "mysql"
   },

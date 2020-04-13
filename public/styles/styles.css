@@ -17,18 +17,11 @@ body {
 .switch:hover {
   background-color: #a7ffeb;
 }
-.log-in {
+.log-out {
   font-weight: bold;
   background-color: #a7ffeb;
 }
-.log-in:hover {
-  background-color: white;
-}
-.sign-up {
-  font-weight: bold;
-  background-color: #a7ffeb;
-}
-.sign-up:hover {
+.log-out:hover {
   background-color: white;
 }
 .sidenav {
@@ -66,11 +59,24 @@ body {
   background-size: cover;
   font-family: "Open Sans", sans-serif;
 }
-#modal2 {
+#modal2,
+#modal3 {
+  width: 500px;
+  padding: 20px;
+}
+.input-field label {
+  font-size: 25px;
   font-family: "Open Sans", sans-serif;
 }
-#modal3 {
-  font-family: "Open Sans", sans-serif;
+.log-in-btn,
+.sign-up-btn,
+.registered-btn {
+  font-size: 20px;
+}
+.log-in-btn:hover,
+.sign-up-btn:hover,
+.registered-btn:hover {
+  background-color: #a7ffeb;
 }
 hr {
   width: 85%;
