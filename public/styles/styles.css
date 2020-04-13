@@ -62,7 +62,21 @@ body {
 #modal2,
 #modal3 {
   width: 500px;
+  padding: 20px;
+}
+.input-field label {
+  font-size: 25px;
   font-family: "Open Sans", sans-serif;
+}
+.log-in-btn,
+.sign-up-btn,
+.registered-btn {
+  font-size: 20px;
+}
+.log-in-btn:hover,
+.sign-up-btn:hover,
+.registered-btn:hover {
+  background-color: #a7ffeb;
 }
 hr {
   width: 85%;

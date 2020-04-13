@@ -74,10 +74,10 @@ $(document).ready(function() {
         type: "DELETE"
       });
     },
-    signUp: function(User) {
+    signUp: function() {
       return $.ajax({
         type: "POST",
-        url: "/api/user",
+        url: "/api/users",
         data: {
           email: $("#email")
             .val()
@@ -93,34 +93,45 @@ $(document).ready(function() {
     },
     logIn: function() {
       return $.ajax({
-        headers: {
-          "Content-Type": "application/json"
-        },
         type: "GET",
-        url: "/api/user/:id",
+        url: "/api/users",
+        // data: {
+        //   email: $("#email")
+        //     .val()
+        //     .trim(),
+        //   password: $("#password")
+        //     .val()
+        //     .trim(),
+        // },
+        // success: function(firstName) {
+        //   alert("Hi " + firstName);
+        // },
+        error: function() {
+          alert("You have entered incorrect login information");
+          $("#modal3").modal({
+            dismissible: false
+          });
+          $("#modal3").modal("open");
+        }
       });
     }
   };
 
   $(".sign-up-btn").on("click", function(event) {
     event.preventDefault();
-    API.signUp().then(function(userID) {
-      user = userID;
-    });
+    API.signUp();
   });
 
-  $(".registered-btn").on("click", function(event) {
+  $(".registered-btn").on("click", function() {
     $("#modal2").modal({
       dismissible: false
     });
     $("#modal2").modal("open");
   });
 
-  var user;
-
   $(".log-in-btn").on("click", function() {
-    API.logIn().then(function(userID) {
-      user = userID;
+    API.logIn().then(function(result) {
+      alert("Hi " + result.firstName);
     });
   });
 
@@ -335,7 +346,7 @@ $(document).ready(function() {
       restaurantState: state,
       restaurantZipCode: zipCode,
       restaurantURL: URL,
-      userID: user
+      userID: userID
     };
 
     itineraries.push(restaurant);
