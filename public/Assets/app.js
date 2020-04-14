@@ -2,7 +2,7 @@
 $(document).ready(function() {
   function runModal() {
     $("#modal3").modal({
-      dismissible: false
+      dismissible: false,
     });
     $("#modal3").modal("open");
   }
@@ -40,39 +40,39 @@ $(document).ready(function() {
     saveRestaurant: function(Restaurant) {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         type: "POST",
         url: "api/restaurants",
-        data: JSON.stringify(Restaurant)
+        data: JSON.stringify(Restaurant),
       });
     },
     getAllRestaurants: function() {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         type: "GET",
-        url: "api/restaurants"
+        url: "api/restaurants",
       });
     },
     getOneRestaurant: function() {
       return $.ajax({
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         type: "GET",
         url:
           "yelp.com/biz." +
           restaurant.restaurantName +
           restaurant.restaurantCity +
-          "?osq=Restaurants"
+          "?osq=Restaurants",
       });
     },
     deleteOneRestaurant: function(id) {
       return $.ajax({
         url: "api/restaurants/" + id,
-        type: "DELETE"
+        type: "DELETE",
       });
     },
     signUp: function() {
@@ -88,8 +88,8 @@ $(document).ready(function() {
             .trim(),
           firstName: $("#firstName")
             .val()
-            .trim()
-        }
+            .trim(),
+        },
       });
     },
     logIn: function() {
@@ -110,12 +110,12 @@ $(document).ready(function() {
         error: function() {
           alert("You have entered incorrect login information");
           $("#modal3").modal({
-            dismissible: false
+            dismissible: false,
           });
           $("#modal3").modal("open");
-        }
+        },
       });
-    }
+    },
   };
 
   $(".sign-up-btn").on("click", function(event) {
@@ -125,7 +125,7 @@ $(document).ready(function() {
 
   $(".registered-btn").on("click", function() {
     $("#modal2").modal({
-      dismissible: false
+      dismissible: false,
     });
     $("#modal2").modal("open");
   });
@@ -224,10 +224,10 @@ $(document).ready(function() {
         },
         headers: {
           Authorization:
-            "Bearer 777OVHyUQXu4MD9WPwXQ3dub9jGslCwGt185TfYEQF6JoBa7tr7kjVe7OvbcNzwp2mY8k3JkODi2curLYOzJsG5dKxmQD8SzDYABjKEzUGC8i3Bk4vXHaU6P5G5DXnYx"
+            "Bearer 777OVHyUQXu4MD9WPwXQ3dub9jGslCwGt185TfYEQF6JoBa7tr7kjVe7OvbcNzwp2mY8k3JkODi2curLYOzJsG5dKxmQD8SzDYABjKEzUGC8i3Bk4vXHaU6P5G5DXnYx",
         },
         dataType: "json",
-        data: { term: "restaurant", location: cityName, limit: "5" }
+        data: { term: "restaurant", location: cityName, limit: "5" },
       }).then(function(response) {
         console.log(response);
         var totalresults = response.total;
@@ -294,25 +294,24 @@ $(document).ready(function() {
         $(".progress").hide();
       });
 
-
       //GETTING YOUTUBE
       $.ajax({
         type: "GET",
         url: "https://www.googleapis.com/youtube/v3/search",
         data: {
-          key: AIzaSyAoFqKem3-oN5_rJRl9hmjVfPng_NQxn0M //should be a .env reference but can't connect to app.js, only to server.js
+          key: "AIzaSyAoFqKem3-oN5_rJRl9hmjVfPng_NQxn0M", //should be a .env reference but can't connect to app.js, only to server.js
           q: cityName + "restaurant" + "food",
           part: "snippet",
           maxResults: 1,
           type: "video",
-          videoEmbeddable: true
+          videoEmbeddable: true,
         },
 
         error: function(response) {
           $("#youTubeArea").append(
             "<h5>Request Failed.</br> We apologize for the inconvenience.</h5>"
           );
-        }
+        },
       }).then(function(response) {
         console.log(response);
         $("iframe").attr(
@@ -348,7 +347,7 @@ $(document).ready(function() {
       restaurantCity: city,
       restaurantState: state,
       restaurantZipCode: zipCode,
-      restaurantURL: URL
+      restaurantURL: URL,
       // userID: userID
     };
 
@@ -409,6 +408,6 @@ $(document).ready(function() {
     indicators: false,
     height: 550,
     transition: 500,
-    interval: 6000
+    interval: 6000,
   });
 });
