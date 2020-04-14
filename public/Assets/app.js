@@ -1,3 +1,4 @@
+//we get an error for any require here (Require is undefined)
 $(document).ready(function() {
   function runModal() {
     $("#modal3").modal({
@@ -293,18 +294,20 @@ $(document).ready(function() {
         $(".progress").hide();
       });
 
+
       //GETTING YOUTUBE
       $.ajax({
         type: "GET",
         url: "https://www.googleapis.com/youtube/v3/search",
         data: {
-          key: "AIzaSyAoFqKem3-oN5_rJRl9hmjVfPng_NQxn0M",
+          key: AIzaSyAoFqKem3-oN5_rJRl9hmjVfPng_NQxn0M //should be a .env reference but can't connect to app.js, only to server.js
           q: cityName + "restaurant" + "food",
           part: "snippet",
           maxResults: 1,
           type: "video",
           videoEmbeddable: true
         },
+
         error: function(response) {
           $("#youTubeArea").append(
             "<h5>Request Failed.</br> We apologize for the inconvenience.</h5>"
@@ -345,8 +348,8 @@ $(document).ready(function() {
       restaurantCity: city,
       restaurantState: state,
       restaurantZipCode: zipCode,
-      restaurantURL: URL,
-      userID: userID
+      restaurantURL: URL
+      // userID: userID
     };
 
     itineraries.push(restaurant);

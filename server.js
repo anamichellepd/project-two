@@ -1,5 +1,9 @@
 require("dotenv").config();
+var keys = require("./keys.js");
+var youtube = keys.youtube.key;
+
 var express = require("express");
+
 // var exphbs = require("express-handlebars");
 var helmet = require("helmet");
 var bearerToken = require("express-bearer-token");
@@ -53,3 +57,4 @@ db.sequelize.sync(syncOptions).then(function() {
 });
 
 module.exports = app;
+return app;
