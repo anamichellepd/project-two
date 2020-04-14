@@ -1,6 +1,7 @@
 require("dotenv").config();
+
 var keys = require("./keys.js");
-var youtube = keys.youtube.key;
+// var youtube = keys.youtube.key;
 
 var express = require("express");
 
