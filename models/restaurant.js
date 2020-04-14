@@ -6,8 +6,8 @@ module.exports = function(sequelize, DataTypes) {
     restaurantCity: DataTypes.STRING,
     restaurantState: DataTypes.STRING,
     restaurantZipCode: DataTypes.STRING,
-    restaurantURL: DataTypes.STRING,
-    userID: DataTypes.INTEGER
+    restaurantURL: DataTypes.STRING
+    // userID: DataTypes.INTEGER
   });
   return Restaurant;
 };
